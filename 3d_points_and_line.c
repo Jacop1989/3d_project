@@ -12,9 +12,8 @@ typedef struct {
     Point3D end;
 } Line3D;
 
-// ตัวอย่างข้อมูลจุด
-Point3D p1 = {0.0, 0.0, 0.0};
-Point3D p2 = {1.0, 1.0, 1.0};
+// ประกาศตัวแปรเส้นแบบ global
+Line3D line;
 
 // ฟังก์ชันสำหรับการวาดแกน (Axes)
 void draw_axes() {
@@ -64,11 +63,10 @@ void display() {
     draw_axes();
 
     // วาดจุด
-    draw_point(p1);
-    draw_point(p2);
+    draw_point(line.start);
+    draw_point(line.end);
 
     // วาดเส้นระหว่างสองจุด
-    Line3D line = {p1, p2};
     draw_line(line);
 
     glutSwapBuffers();
@@ -95,6 +93,15 @@ void reshape(int width, int height) {
               0.0, 1.0, 0.0);  // แกน Y ชี้ขึ้น
 }
 
+// ฟังก์ชันเพื่อกำหนดค่าให้กับเส้น
+void init_line() {
+    Point3D p1 = {0.0, 0.0, 0.0};
+    Point3D p2 = {1.0, 1.0, 1.0};
+    line.start = p1;
+    line.end = p2;
+}
+
+// ฟังก์ชันหลัก
 int main(int argc, char** argv) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
@@ -102,6 +109,7 @@ int main(int argc, char** argv) {
     glutCreateWindow("3D Points and Line with Axes");
 
     init(); // เรียกฟังก์ชันตั้งค่าเริ่มต้น
+    init_line(); // เรียกฟังก์ชันกำหนดค่าให้กับเส้น
 
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
