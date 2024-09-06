@@ -16,9 +16,6 @@ typedef struct {
 Point3D p1 = {0.0, 0.0, 0.0};
 Point3D p2 = {1.0, 1.0, 1.0};
 
-// ประกาศตัวแปร line แต่ยังไม่กำหนดค่า
-Line3D line;
-
 // ฟังก์ชันสำหรับการวาดแกน (Axes)
 void draw_axes() {
     glBegin(GL_LINES);
@@ -71,6 +68,7 @@ void display() {
     draw_point(p2);
 
     // วาดเส้นระหว่างสองจุด
+    Line3D line = {p1, p2};
     draw_line(line);
 
     glutSwapBuffers();
@@ -80,10 +78,6 @@ void display() {
 void init() {
     glClearColor(0.0, 0.0, 0.0, 1.0); // ตั้งค่าสีพื้นหลังเป็นสีดำ
     glEnable(GL_DEPTH_TEST);          // เปิดใช้งานการตรวจสอบความลึก (3D)
-    
-    // กำหนดค่าให้กับ line ที่ประกาศไว้ด้านบน
-    line.start = p1;
-    line.end = p2;
 }
 
 // ฟังก์ชันสำหรับการปรับขนาดหน้าต่าง
