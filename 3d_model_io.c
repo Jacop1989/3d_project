@@ -63,6 +63,7 @@ void save_obj(const char* filename) {
     printf("บันทึกไฟล์สำเร็จ: %s\n", filename);
 }
 
+#ifndef UNIT_TEST
 int main() {
     load_obj("model.obj");
 
@@ -81,3 +82,4 @@ int main() {
 
     return 0;
 }
+#endif
