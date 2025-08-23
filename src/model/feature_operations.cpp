@@ -3,17 +3,18 @@
 
 namespace model {
 
-void applyFillet(Feature& feature, double radius) {
+void applyFillet(Feature &feature, double radius) {
     // In a full implementation this would modify the feature's geometry
     std::cout << "Applying fillet with radius " << radius << std::endl;
-    feature.generate();
+    Mesh mesh = feature.generate();
+    free_mesh(&mesh);
 }
 
-void applyChamfer(Feature& feature, double distance) {
+void applyChamfer(Feature &feature, double distance) {
     // In a full implementation this would modify the feature's geometry
     std::cout << "Applying chamfer with distance " << distance << std::endl;
-    feature.generate();
+    Mesh mesh = feature.generate();
+    free_mesh(&mesh);
 }
 
 } // namespace model
-
