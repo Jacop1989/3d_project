@@ -1,5 +1,5 @@
 #pragma once
-#include <vector>
+#include <list>
 #include <functional>
 #include "entity_line.h"
 #include "entity_circle.h"
@@ -14,10 +14,13 @@ public:
     void addPerpendicular(EntityLine& l1, EntityLine& l2) { cm.addPerpendicular(l1,l2); }
     void addEqualLength(EntityLine& l1, EntityLine& l2) { cm.addEqualLength(l1,l2); }
     void solve(int iterations = 20);
-    const std::vector<EntityLine>& getLines() const { return lines; }
-    const std::vector<EntityCircle>& getCircles() const { return circles; }
+    const std::list<EntityLine>& getLines() const { return lines; }
+    const std::list<EntityCircle>& getCircles() const { return circles; }
 private:
-    std::vector<EntityLine> lines;
-    std::vector<EntityCircle> circles;
+    // Use std::list to keep entity addresses stable so that parameter
+    // pointers registered with the ConstraintManager remain valid after
+    // inserting new elements.
+    std::list<EntityLine> lines;
+    std::list<EntityCircle> circles;
     ConstraintManager cm;
 };
