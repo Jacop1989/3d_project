@@ -1,23 +1,26 @@
 #pragma once
 
+
 #include <vector>
+#include "vector3.h"
 
 namespace kernel {
 
-// Basic sketch representation as a list of vertex coordinates
+// Basic sketch representation as a list of vertices
 struct Sketch {
-    std::vector<double> points; // x,y,z triples stored sequentially
+    std::vector<Vector3> vertices;
 };
 
 // Triangle face referencing three vertex indices
 struct Face {
-    double v1;
-    double v2;
-    double v3;
+    size_t v1;
+    size_t v2;
+    size_t v3;
 };
 
-// Simple mesh container
+// Simple mesh container holding vertices and faces
 struct Mesh {
+    std::vector<Vector3> vertices;
     std::vector<Face> faces;
 };
 
