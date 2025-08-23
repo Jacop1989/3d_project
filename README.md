@@ -12,7 +12,7 @@ New parsers for common mesh formats live in `src/io/`:
 - `step_parser.c` – placeholder for future STEP support via external
   libraries such as Open Cascade.
 
-The shared `Mesh` data structure is defined in `src/mesh.h`.
+The shared `Mesh` data structure is defined in `src/kernel/mesh.h`.
 
 See [`docs/cadproj_format.md`](docs/cadproj_format.md) for details on the
 `.cadproj` design.

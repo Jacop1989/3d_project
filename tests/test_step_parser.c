@@ -3,7 +3,7 @@
 #include <string.h>
 
 #include "../src/io/step_parser.h"
-#include "../src/mesh.h"
+#include "../src/kernel/mesh.h"
 
 int main(void) {
     const char *fname = "triangle.step";

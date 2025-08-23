@@ -3,15 +3,14 @@
 namespace kernel {
 
 Mesh buildMeshFromSketch(const Sketch& sketch) {
-    Mesh mesh;
-    // copy vertices into the mesh
-    mesh.vertices = sketch.vertices;
+    MeshCpp cpp;
+    cpp.vertices = sketch.vertices;
     // For every three vertices in the sketch create one triangular face
     for (size_t i = 0; i + 2 < sketch.vertices.size(); i += 3) {
-        Face f{i, i + 1, i + 2};
-        mesh.faces.push_back(f);
+        Face f{static_cast<int>(i), static_cast<int>(i + 1), static_cast<int>(i + 2)};
+        cpp.faces.push_back(f);
     }
-    return mesh;
+    return to_c_mesh(cpp);
 }
 
 } // namespace kernel

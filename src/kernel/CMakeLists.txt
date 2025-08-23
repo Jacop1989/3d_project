@@ -3,4 +3,5 @@ add_library(kernel
     boolean.cpp
     mass_properties.cpp
     mesh_builder.cpp
+    mesh.c
 )

@@ -1,7 +1,7 @@
 #ifndef CADPROJ_IO_H
 #define CADPROJ_IO_H
 
-#include "../mesh.h"
+#include "../kernel/mesh.h"
 
 /* Simple internal CAD project format (.cadproj) for storing meshes and
  * placeholders for parametric and assembly data. */

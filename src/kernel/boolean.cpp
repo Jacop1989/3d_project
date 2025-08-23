@@ -1,4 +1,7 @@
 #include "boolean.h"
+#include <algorithm>
+#include <vector>
+#include "vector3.h"
 
 namespace {
     bool contains(const std::vector<Vector3> &verts, const Vector3 &v) {
@@ -7,34 +10,40 @@ namespace {
 }
 
 Mesh boolean_union(const Mesh &a, const Mesh &b) {
-    Mesh result;
-    result.vertices = a.vertices;
-    for (const auto &v : b.vertices) {
-        if (!contains(result.vertices, v)) {
-            result.vertices.push_back(v);
+    kernel::MeshCpp ac = kernel::to_cpp_mesh(a);
+    kernel::MeshCpp bc = kernel::to_cpp_mesh(b);
+    kernel::MeshCpp rc;
+    rc.vertices = ac.vertices;
+    for (const auto &v : bc.vertices) {
+        if (!contains(rc.vertices, v)) {
+            rc.vertices.push_back(v);
         }
     }
-    return result;
+    return kernel::to_c_mesh(rc);
 }
 
 Mesh boolean_subtract(const Mesh &a, const Mesh &b) {
-    Mesh result;
-    for (const auto &v : a.vertices) {
-        if (!contains(b.vertices, v)) {
-            result.vertices.push_back(v);
+    kernel::MeshCpp ac = kernel::to_cpp_mesh(a);
+    kernel::MeshCpp bc = kernel::to_cpp_mesh(b);
+    kernel::MeshCpp rc;
+    for (const auto &v : ac.vertices) {
+        if (!contains(bc.vertices, v)) {
+            rc.vertices.push_back(v);
         }
     }
-    return result;
+    return kernel::to_c_mesh(rc);
 }
 
 Mesh boolean_intersect(const Mesh &a, const Mesh &b) {
-    Mesh result;
-    for (const auto &v : a.vertices) {
-        if (contains(b.vertices, v)) {
-            if (!contains(result.vertices, v)) {
-                result.vertices.push_back(v);
+    kernel::MeshCpp ac = kernel::to_cpp_mesh(a);
+    kernel::MeshCpp bc = kernel::to_cpp_mesh(b);
+    kernel::MeshCpp rc;
+    for (const auto &v : ac.vertices) {
+        if (contains(bc.vertices, v)) {
+            if (!contains(rc.vertices, v)) {
+                rc.vertices.push_back(v);
             }
         }
     }
-    return result;
+    return kernel::to_c_mesh(rc);
 }
