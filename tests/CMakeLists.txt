@@ -7,3 +7,8 @@ add_executable(test_step_parser
     ../src/io/step_parser.c
     ../src/mesh.c)
 add_test(NAME test_step_parser COMMAND test_step_parser)
+
+add_executable(test_mesh_builder
+    test_mesh_builder.cpp
+    ../src/kernel/mesh_builder.cpp)
+add_test(NAME test_mesh_builder COMMAND test_mesh_builder)
