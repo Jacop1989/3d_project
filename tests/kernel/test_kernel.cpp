@@ -2,6 +2,7 @@
 #include "../../src/kernel/vector3.h"
 #include "../../src/kernel/matrix4.h"
 #include "../../src/kernel/boolean.h"
+#include "../../src/kernel/mesh.h"
 
 int main() {
     // Vector3 tests
@@ -18,17 +19,27 @@ int main() {
     assert(transformed == Vector3(2,0,0));
 
     // Boolean tests
-    Mesh a{{Vector3(0,0,0), Vector3(1,0,0)}};
-    Mesh b{{Vector3(1,0,0), Vector3(2,0,0)}};
+    kernel::MeshCpp a_cpp;
+    a_cpp.vertices = {Vector3(0,0,0), Vector3(1,0,0)};
+    kernel::MeshCpp b_cpp;
+    b_cpp.vertices = {Vector3(1,0,0), Vector3(2,0,0)};
+    Mesh a = kernel::to_c_mesh(a_cpp);
+    Mesh b = kernel::to_c_mesh(b_cpp);
 
     Mesh u = boolean_union(a,b);
-    assert(u.vertices.size() == 3);
+    assert(u.vertex_count == 3);
 
     Mesh s = boolean_subtract(a,b);
-    assert(s.vertices.size() == 1 && s.vertices[0] == Vector3(0,0,0));
+    assert(s.vertex_count == 1 && s.vertices[0].x == 0 && s.vertices[0].y == 0 && s.vertices[0].z == 0);
 
     Mesh i = boolean_intersect(a,b);
-    assert(i.vertices.size() == 1 && i.vertices[0] == Vector3(1,0,0));
+    assert(i.vertex_count == 1 && i.vertices[0].x == 1 && i.vertices[0].y == 0 && i.vertices[0].z == 0);
+
+    free_mesh(&a);
+    free_mesh(&b);
+    free_mesh(&u);
+    free_mesh(&s);
+    free_mesh(&i);
 
     return 0;
 }

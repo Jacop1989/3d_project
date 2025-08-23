@@ -1,7 +1,7 @@
 #ifndef STL_PARSER_H
 #define STL_PARSER_H
 
-#include "../mesh.h"
+#include "../kernel/mesh.h"
 
 /* Parse an ASCII STL file into a Mesh structure.
  * Returns 0 on success, -1 on failure.

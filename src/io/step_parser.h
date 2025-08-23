@@ -1,7 +1,7 @@
 #ifndef STEP_PARSER_H
 #define STEP_PARSER_H
 
-#include "../mesh.h"
+#include "../kernel/mesh.h"
 
 /* Parse a minimal subset of STEP files and populate @mesh.
  *
