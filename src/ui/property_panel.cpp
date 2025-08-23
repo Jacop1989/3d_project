@@ -1,9 +1,17 @@
 #include "property_panel.h"
-#include <iostream>
+#include <imgui.h>
 
-void edit_material(Material& material) {
-    std::cout << "Enter density: ";
-    std::cin >> material.density;
-    std::cout << "Enter color (r g b): ";
-    std::cin >> material.color.r >> material.color.g >> material.color.b;
+bool edit_material(Material& material) {
+    bool changed = false;
+    changed |= ImGui::InputFloat("Density", &material.density);
+
+    float color[3] = {material.color.r, material.color.g, material.color.b};
+    if (ImGui::ColorEdit3("Color", color)) {
+        material.color.r = color[0];
+        material.color.g = color[1];
+        material.color.b = color[2];
+        changed = true;
+    }
+
+    return changed;
 }
