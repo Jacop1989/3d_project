@@ -19,8 +19,8 @@ void Sketch::addConstraint(const std::function<double()>& c) {
     cm.addConstraint(c);
 }
 
-void Sketch::solve() {
-    cm.solve();
+void Sketch::solve(int iterations) {
+    cm.solve(iterations);
 }
 
 namespace sketch {

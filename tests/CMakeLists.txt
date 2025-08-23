@@ -4,6 +4,18 @@ add_executable(test_model_io test_model_io.c)
 target_compile_definitions(test_model_io PRIVATE UNIT_TEST)
 add_test(NAME test_model_io COMMAND test_model_io)
 
+add_executable(test_obj_parser
+    test_obj_parser.c
+    ../src/io/obj_parser.c
+    ../src/kernel/mesh.c)
+add_test(NAME test_obj_parser COMMAND test_obj_parser)
+
+add_executable(test_stl_parser
+    test_stl_parser.c
+    ../src/io/stl_parser.c
+    ../src/kernel/mesh.c)
+add_test(NAME test_stl_parser COMMAND test_stl_parser)
+
 add_executable(test_step_parser
     test_step_parser.c
     ../src/io/step_parser.c
@@ -31,3 +43,16 @@ add_executable(test_features
     ../src/kernel/mesh.c
     ../src/kernel/boolean.cpp)
 add_test(NAME test_features COMMAND test_features)
+
+add_executable(test_kernel
+    kernel/test_kernel.cpp
+    ../src/kernel/boolean.cpp
+    ../src/kernel/mesh.c)
+add_test(NAME test_kernel COMMAND test_kernel)
+
+add_executable(test_assembly
+    test_assembly.cpp
+    ../src/assembly/Assembly.cpp
+    ../src/assembly/Component.cpp
+    ../src/assembly/Mate.cpp)
+add_test(NAME test_assembly COMMAND test_assembly)
