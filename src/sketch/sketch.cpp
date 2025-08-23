@@ -1,3 +1,4 @@
+
 #include "sketch.h"
 
 EntityLine& Sketch::addLine(Point2D a, Point2D b) {
@@ -21,3 +22,8 @@ void Sketch::addConstraint(const std::function<double()>& c) {
 void Sketch::solve() {
     cm.solve();
 }
+
+namespace sketch {
+void placeholder() {}
+} // namespace sketch
+
