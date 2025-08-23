@@ -4,9 +4,11 @@
 #include <string.h>
 
 int parse_obj(const char *filename, Mesh *mesh) {
-    if (!filename || !mesh) return -1;
+    if (!filename || !mesh)
+        return -1;
     FILE *file = fopen(filename, "r");
-    if (!file) return -1;
+    if (!file)
+        return -1;
 
     char line[256];
     size_t vcap = 0, fcap = 0;
@@ -19,8 +21,10 @@ int parse_obj(const char *filename, Mesh *mesh) {
         if (line[0] == 'v' && line[1] == ' ') {
             if (mesh->vertex_count == vcap) {
                 vcap = vcap ? vcap * 2 : 64;
-                mesh->vertices = realloc(mesh->vertices, vcap * sizeof(Vertex));
-                if (!mesh->vertices) goto error;
+                Vertex *temp_vertices = realloc(mesh->vertices, vcap * sizeof(Vertex));
+                if (!temp_vertices)
+                    goto error;
+                mesh->vertices = temp_vertices;
             }
             Vertex *v = &mesh->vertices[mesh->vertex_count++];
             if (sscanf(line + 2, "%f %f %f", &v->x, &v->y, &v->z) != 3)
@@ -28,8 +32,10 @@ int parse_obj(const char *filename, Mesh *mesh) {
         } else if (line[0] == 'f' && line[1] == ' ') {
             if (mesh->face_count == fcap) {
                 fcap = fcap ? fcap * 2 : 64;
-                mesh->faces = realloc(mesh->faces, fcap * sizeof(Face));
-                if (!mesh->faces) goto error;
+                Face *temp_faces = realloc(mesh->faces, fcap * sizeof(Face));
+                if (!temp_faces)
+                    goto error;
+                mesh->faces = temp_faces;
             }
             Face *f = &mesh->faces[mesh->face_count++];
             if (sscanf(line + 2, "%d %d %d", &f->v1, &f->v2, &f->v3) != 3)
