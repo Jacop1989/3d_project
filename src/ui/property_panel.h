@@ -3,6 +3,7 @@
 
 #include "../model/material.h"
 
-void edit_material(Material& material);
+// Returns true if any property was modified.
+bool edit_material(Material& material);
 
 #endif // UI_PROPERTY_PANEL_H
