@@ -23,3 +23,11 @@ add_executable(test_constraints
     ../src/sketch/entity_line.cpp
     ../src/sketch/entity_circle.cpp)
 add_test(NAME test_constraints COMMAND test_constraints)
+
+add_executable(test_features
+    test_features.cpp
+    ../src/model/feature.cpp
+    ../src/model/history_tree.cpp
+    ../src/kernel/mesh.c
+    ../src/kernel/boolean.cpp)
+add_test(NAME test_features COMMAND test_features)
