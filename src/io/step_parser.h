@@ -3,8 +3,11 @@
 
 #include "../mesh.h"
 
-/* Placeholder for STEP parsing. The implementation is expected to use
- * an external library such as Open Cascade in the future. */
+/* Parse a minimal subset of STEP files and populate @mesh.
+ *
+ * The current implementation supports CARTESIAN_POINT entities describing
+ * vertices and TRIANGULAR_FACE entities referencing those vertices.  The
+ * function returns 0 on success and -1 on failure. */
 int parse_step(const char *filename, Mesh *mesh);
 
 #endif /* STEP_PARSER_H */
