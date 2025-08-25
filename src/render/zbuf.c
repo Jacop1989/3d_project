@@ -1,12 +1,17 @@
 #include "zbuf.h"
-#include <stdlib.h>
+#include "core/safe.h"
+#include "core/log.h"
 
-int zbuf_init(ZBuffer *zb, size_t width, size_t height) {
-    if (!zb || width==0 || height==0) return 0;
+err_t zbuf_init(ZBuffer *zb, size_t width, size_t height) {
+    if (!zb || width==0 || height==0) return ERR_INVALID;
     zb->width = width;
     zb->height = height;
-    zb->data = (float*)malloc(sizeof(float) * width * height);
-    return zb->data != NULL;
+    zb->data = (float*)SAFE_MALLOC(sizeof(float) * width * height);
+    if (!zb->data) {
+        log_err("zbuf alloc failed");
+        return ERR_OOM;
+    }
+    return ERR_OK;
 }
 
 void zbuf_clear(ZBuffer *zb, float value) {
@@ -19,8 +24,7 @@ void zbuf_clear(ZBuffer *zb, float value) {
 
 void zbuf_free(ZBuffer *zb) {
     if (!zb) return;
-    free(zb->data);
-    zb->data = NULL;
+    SAFE_FREE(zb->data);
     zb->width = zb->height = 0;
 }
 

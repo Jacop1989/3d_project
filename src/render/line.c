@@ -1,12 +1,14 @@
 #include "line.h"
+#include "core/log.h"
+#include "core/safe.h"
 #include <stdlib.h>
 
 void line_draw(Framebuffer *fb, Vec3 a, Vec3 b, uint32_t color) {
-    if (!fb || !fb->pixels) return;
-    int x0 = (int)a.x;
-    int y0 = (int)a.y;
-    int x1 = (int)b.x;
-    int y1 = (int)b.y;
+    if (!fb || !fb->pixels) { log_warn("line_draw invalid fb"); return; }
+    int x0 = CLAMPi((int)a.x, 0, (int)fb->width-1);
+    int y0 = CLAMPi((int)a.y, 0, (int)fb->height-1);
+    int x1 = CLAMPi((int)b.x, 0, (int)fb->width-1);
+    int y1 = CLAMPi((int)b.y, 0, (int)fb->height-1);
     int dx = abs(x1 - x0);
     int dy = abs(y1 - y0);
     int sx = x0 < x1 ? 1 : -1;

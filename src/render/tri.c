@@ -1,4 +1,5 @@
 #include "tri.h"
+#include "core/log.h"
 #include <math.h>
 
 static double edge_function(const Vec3 *a, const Vec3 *b, double x, double y) {
@@ -6,7 +7,10 @@ static double edge_function(const Vec3 *a, const Vec3 *b, double x, double y) {
 }
 
 void tri_fill(Framebuffer *fb, ZBuffer *zb, Vec3 v0, Vec3 v1, Vec3 v2, uint32_t color) {
-    if (!fb || !zb) return;
+    if (!fb || !zb || !fb->pixels || !zb->data) {
+        log_warn("tri_fill invalid buffers");
+        return;
+    }
     float minx = floorf(fminf(fminf(v0.x, v1.x), v2.x));
     float maxx = ceilf(fmaxf(fmaxf(v0.x, v1.x), v2.x));
     float miny = floorf(fminf(fminf(v0.y, v1.y), v2.y));

@@ -4,6 +4,7 @@
 #include "zbuf.h"
 #include "camera.h"
 #include "framebuffer.h"
+#include "core/log.h"
 #include <float.h>
 #include <stdint.h>
 #include <math.h>
@@ -12,12 +13,13 @@
 #define HEIGHT 480
 
 int main(void) {
-    if (platform_init("3D App", WIDTH, HEIGHT) != 0)
+    if(log_init(NULL)!=0) return 1;
+    if (platform_init("3D App", WIDTH, HEIGHT) != ERR_OK)
         return 1;
 
     Framebuffer fb;
     ZBuffer zb;
-    if (!framebuffer_init(&fb, WIDTH, HEIGHT) || !zbuf_init(&zb, WIDTH, HEIGHT)) {
+    if (!framebuffer_init(&fb, WIDTH, HEIGHT) || zbuf_init(&zb, WIDTH, HEIGHT)!=ERR_OK) {
         framebuffer_free(&fb);
         zbuf_free(&zb);
         platform_shutdown();
