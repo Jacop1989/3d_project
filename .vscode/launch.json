@@ -1,17 +1,15 @@
 {
   "version": "0.2.0",
   "configurations": [
-    
     {
-      "name": "Debug 3D Project",
+      "name": "Debug 3d_project",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/3d_project.exe",
+      "program": "${workspaceFolder}/build/3d_project",
       "cwd": "${workspaceFolder}",
       "MIMode": "gdb",
-      "miDebuggerPath": "C:/msys64/mingw64/bin/gdb.exe",
-      "preLaunchTask": "build 3d_project",
-      "externalConsole": true
+      "miDebuggerPath": "gdb",
+      "preLaunchTask": "build"
     }
   ]
 }

@@ -1,13 +1,8 @@
-#ifndef TRI_H
-#define TRI_H
-
+#pragma once
+/// Half-space triangle rasterizer with z-buffer.
 #include <stdint.h>
+#include "vec.h"
+#include "framebuffer.h"
+#include "zbuf.h"
 
-typedef struct {
-    float x, y, z;
-} Vec3;
-
-void triangle_fill_halfspace(uint32_t *fb, float *zbuf, int width, int height,
-                             Vec3 v0, Vec3 v1, Vec3 v2, uint32_t color);
-
-#endif /* TRI_H */
+void tri_fill(Framebuffer *fb, ZBuffer *zb, Vec3 v0, Vec3 v1, Vec3 v2, uint32_t color);

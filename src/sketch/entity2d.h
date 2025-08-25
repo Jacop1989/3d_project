@@ -1,4 +1,5 @@
 #pragma once
+/// Basic 2D sketch entities.
 #ifdef __cplusplus
 extern "C" {
 #endif

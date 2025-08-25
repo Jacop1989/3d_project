@@ -1,15 +1,13 @@
-cmake_minimum_required(VERSION 3.10)
-
-project(3d_project LANGUAGES CXX)
-
-enable_language(C)
-
-enable_testing()
-
-add_subdirectory(tests)
-
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-add_subdirectory(src)
-
+cmake_minimum_required(VERSION 3.16)
+project(3d_project C)
+set(CMAKE_C_STANDARD 17)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+file(GLOB_RECURSE SRC CONFIGURE_DEPENDS "src/*.c" "3d_*.c")
+add_executable(3d_project ${SRC})
+add_compile_options(-Wall -Wextra -Wshadow -Wconversion -Wpedantic -Wno-unused-parameter)
+target_include_directories(3d_project PRIVATE include src/app src/math src/render src/platform src/sketch)
+if (WIN32)
+  target_link_libraries(3d_project PRIVATE gdi32 user32 kernel32)
+else()
+  target_link_libraries(3d_project PRIVATE X11 m)
+endif()

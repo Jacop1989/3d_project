@@ -1,45 +1,25 @@
 #include "platform.h"
 #include "tri.h"
+#include "line.h"
 #include "zbuf.h"
 #include "camera.h"
+#include "framebuffer.h"
 #include <float.h>
 #include <stdint.h>
-#include <stdlib.h>
-#include <string.h>
 #include <math.h>
 
 #define WIDTH 640
 #define HEIGHT 480
 
-static void draw_line(uint32_t *fb, int width, int height, Vec3 a, Vec3 b, uint32_t color) {
-    int x0 = (int)a.x;
-    int y0 = (int)a.y;
-    int x1 = (int)b.x;
-    int y1 = (int)b.y;
-    int dx = abs(x1 - x0);
-    int dy = abs(y1 - y0);
-    int sx = x0 < x1 ? 1 : -1;
-    int sy = y0 < y1 ? 1 : -1;
-    int err = dx - dy;
-    while (1) {
-        if (x0 >= 0 && x0 < width && y0 >= 0 && y0 < height)
-            fb[y0 * width + x0] = color;
-        if (x0 == x1 && y0 == y1) break;
-        int e2 = 2 * err;
-        if (e2 > -dy) { err -= dy; x0 += sx; }
-        if (e2 < dx) { err += dx; y0 += sy; }
-    }
-}
-
 int main(void) {
     if (platform_init("3D App", WIDTH, HEIGHT) != 0)
         return 1;
 
-    uint32_t *fb = (uint32_t*)calloc(WIDTH * HEIGHT, sizeof(uint32_t));
-    float *zbuf = (float*)malloc(WIDTH * HEIGHT * sizeof(float));
-    if (!fb || !zbuf) {
-        free(fb);
-        free(zbuf);
+    Framebuffer fb;
+    ZBuffer zb;
+    if (!framebuffer_init(&fb, WIDTH, HEIGHT) || !zbuf_init(&zb, WIDTH, HEIGHT)) {
+        framebuffer_free(&fb);
+        zbuf_free(&zb);
         platform_shutdown();
         return 1;
     }
@@ -74,8 +54,8 @@ int main(void) {
 
     float angle = 0.0f;
     while (!platform_poll()) {
-        memset(fb, 0, WIDTH * HEIGHT * sizeof(uint32_t));
-        zbuf_clear(zbuf, WIDTH, HEIGHT, FLT_MAX);
+        framebuffer_clear(&fb, 0);
+        zbuf_clear(&zb, FLT_MAX);
 
         Mat4 model = mat4_rotate_y(angle);
         Mat4 view = camera_view_matrix(&cam);
@@ -99,24 +79,24 @@ int main(void) {
             uint32_t i0 = tris[i][0];
             uint32_t i1 = tris[i][1];
             uint32_t i2 = tris[i][2];
-            triangle_fill_halfspace(fb, zbuf, WIDTH, HEIGHT,
-                                    projected[i0], projected[i1], projected[i2],
-                                    0xFF0080FF);
+            tri_fill(&fb, &zb,
+                     projected[i0], projected[i1], projected[i2],
+                     0xFF0080FF);
         }
 
         for (int i = 0; i < 12; ++i) {
             uint32_t i0 = edges[i][0];
             uint32_t i1 = edges[i][1];
-            draw_line(fb, WIDTH, HEIGHT, projected[i0], projected[i1], 0xFFFFFFFF);
+            line_draw(&fb, projected[i0], projected[i1], 0xFFFFFFFF);
         }
 
-        platform_present(fb);
+        platform_present(fb.pixels);
         platform_sleep(16);
         angle += 0.01f;
     }
 
-    free(zbuf);
-    free(fb);
+    zbuf_free(&zb);
+    framebuffer_free(&fb);
     platform_shutdown();
     return 0;
 }

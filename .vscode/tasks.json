@@ -2,23 +2,10 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "build 3d_project",
+      "label": "build",
       "type": "shell",
-      "command": "gcc",
-      "args": [
-        "-std=c17",
-        "-Wall",
-        "-g",
-        "3d_model_io.c",
-        "3d_model_viewer.c",
-        "3d_points_and_line.c",
-        "-o",
-        "3d_project.exe"
-      ],
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      },
+      "command": "cmake -S . -B build && cmake --build build",
+      "group": {"kind": "build", "isDefault": true},
       "problemMatcher": ["$gcc"]
     }
   ]
