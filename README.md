@@ -1,21 +1,29 @@
 # 3D Project
 
-Minimal software-rendered demo in pure C with Win32/X11 platform layer.
+Minimal software renderer in pure C17 using only operating system APIs (Win32/X11). No third‑party libraries are required.
 
-## Build & Run
+## Build
 
-### Windows (MSYS2 MinGW64)
 ```sh
-pacman -S --needed mingw-w64-x86_64-gcc mingw-w64-x86_64-gdb
-cmake -S . -B build
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug   # or Release
 cmake --build build
-build/3d_project.exe
 ```
+Debug builds use `-O0 -g` and enable sanitizers when available. Release builds use `-O2 -DNDEBUG`.
 
-### Linux
-```sh
-sudo apt-get install -y build-essential libx11-dev
-cmake -S . -B build
-cmake --build build
+## Run
+
+```
 ./build/3d_project
 ```
+
+## Tests
+
+```
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
+cmake --build build --target test_runner
+./build/test_runner
+```
+
+## Error handling
+
+All runtime functions return `err_t` codes and log messages instead of aborting. Allocation failures during initialization are reported as `ERR_OOM` and the application exits cleanly. Bad inputs are clipped or ignored safely.

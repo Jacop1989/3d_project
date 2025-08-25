@@ -1,8 +1,9 @@
 #pragma once
 /// Cross-platform window management.
 #include <stdint.h>
+#include "core/err.h"
 
-int platform_init(const char *title, int width, int height);
+err_t platform_init(const char *title, int width, int height);
 int platform_poll(void);
 void platform_present(const uint32_t *pixels);
 void platform_sleep(int milliseconds);
