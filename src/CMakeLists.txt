@@ -6,7 +6,7 @@ add_subdirectory(io)
 add_subdirectory(ui)
 add_subdirectory(platform)
 
-add_executable(three_d_app main.cpp)
+add_executable(three_d_app app/main.c)
 target_link_libraries(three_d_app
     kernel
     sketch
