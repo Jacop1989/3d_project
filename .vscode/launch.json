@@ -5,11 +5,12 @@
       "name": "Debug 3d_project",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/build/3d_project",
+      "program": "${workspaceFolder}/build/3d_project.exe",
       "cwd": "${workspaceFolder}",
       "MIMode": "gdb",
-      "miDebuggerPath": "gdb",
-      "preLaunchTask": "build"
+      "miDebuggerPath": "C:/msys64/mingw64/bin/gdb.exe",
+      "preLaunchTask": "build",
+      "externalConsole": true
     }
   ]
 }

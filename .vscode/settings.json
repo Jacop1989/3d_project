@@ -1,0 +1,10 @@
+{
+  "cmake.cmakePath": "C:/msys64/mingw64/bin/cmake.exe",
+  "cmake.generator": "MinGW Makefiles",
+  "cmake.configureSettings": {
+    "CMAKE_C_COMPILER": "C:/msys64/mingw64/bin/gcc.exe",
+    "CMAKE_MAKE_PROGRAM": "C:/msys64/mingw64/bin/mingw32-make.exe"
+  },
+  "cmake.buildDirectory": "${workspaceFolder}/build",
+  "cmake.useCMakePresets": "always"
+}

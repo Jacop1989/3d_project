@@ -2,11 +2,44 @@
   "version": "2.0.0",
   "tasks": [
     {
+      "label": "cmake-configure (msys2)",
+      "type": "process",
+      "command": "C:/msys64/usr/bin/bash.exe",
+      "args": [
+        "-lc",
+        "cmake -S . -B build -G 'MinGW Makefiles' && echo CONFIGURE_OK"
+      ],
+      "options": {
+        "env": {
+          "MSYSTEM": "MINGW64",
+          "CHERE_INVOKING": "1",
+          "PATH": "C:/msys64/mingw64/bin;C:/msys64/usr/bin;${env:PATH}"
+        }
+      },
+      "problemMatcher": "$gcc"
+    },
+    {
+      "label": "cmake-build (msys2)",
+      "type": "process",
+      "command": "C:/msys64/usr/bin/bash.exe",
+      "args": [
+        "-lc",
+        "cmake --build build --config Debug -j 8 && echo BUILD_OK"
+      ],
+      "options": {
+        "env": {
+          "MSYSTEM": "MINGW64",
+          "CHERE_INVOKING": "1",
+          "PATH": "C:/msys64/mingw64/bin;C:/msys64/usr/bin;${env:PATH}"
+        }
+      },
+      "problemMatcher": "$gcc"
+    },
+    {
       "label": "build",
-      "type": "shell",
-      "command": "cmake -S . -B build && cmake --build build",
-      "group": {"kind": "build", "isDefault": true},
-      "problemMatcher": ["$gcc"]
+      "dependsOn": ["cmake-configure (msys2)", "cmake-build (msys2)"],
+      "dependsOrder": "sequence",
+      "group": { "kind": "build", "isDefault": true }
     }
   ]
 }
