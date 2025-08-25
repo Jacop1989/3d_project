@@ -4,6 +4,7 @@ add_subdirectory(model)
 add_subdirectory(assembly)
 add_subdirectory(io)
 add_subdirectory(ui)
+add_subdirectory(platform)
 
 add_executable(three_d_app main.cpp)
 target_link_libraries(three_d_app
@@ -13,4 +14,5 @@ target_link_libraries(three_d_app
     assembly
     io
     ui
+    platform
 )
