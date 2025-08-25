@@ -1,4 +1,5 @@
 #pragma once
+/// Minimal 2D constraint solver.
 #include "entity2d.h"
 
 #ifdef __cplusplus

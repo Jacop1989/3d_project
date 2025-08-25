@@ -1,19 +1,21 @@
 # 3D Project
 
-This repository experiments with simple 3D file parsing and rendering.
+Minimal software-rendered demo in pure C with Win32/X11 platform layer.
 
-## I/O Library
+## Build & Run
 
-New parsers for common mesh formats live in `src/io/`:
+### Windows (MSYS2 MinGW64)
+```sh
+pacman -S --needed mingw-w64-x86_64-gcc mingw-w64-x86_64-gdb
+cmake -S . -B build
+cmake --build build
+build/3d_project.exe
+```
 
-- `obj_parser.c` – loads Wavefront OBJ files.
-- `stl_parser.c` – loads ASCII STL files.
-- `cadproj_io.c` – reads and writes the experimental `.cadproj` format.
-- `step_parser.c` – placeholder for future STEP support via external
-  libraries such as Open Cascade.
-
-The shared `Mesh` data structure is defined in `src/kernel/mesh.h`.
-
-See [`docs/cadproj_format.md`](docs/cadproj_format.md) for details on the
-`.cadproj` design.
-
+### Linux
+```sh
+sudo apt-get install -y build-essential libx11-dev
+cmake -S . -B build
+cmake --build build
+./build/3d_project
+```

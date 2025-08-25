@@ -90,27 +90,6 @@ Mat4 mat4_perspective(float fovy, float aspect, float near_z, float far_z) {
     return m;
 }
 
-static Vec3 vec3_sub(Vec3 a, Vec3 b) {
-    return (Vec3){a.x - b.x, a.y - b.y, a.z - b.z};
-}
-
-static Vec3 vec3_cross(Vec3 a, Vec3 b) {
-    return (Vec3){
-        a.y * b.z - a.z * b.y,
-        a.z * b.x - a.x * b.z,
-        a.x * b.y - a.y * b.x
-    };
-}
-
-static float vec3_dot(Vec3 a, Vec3 b) {
-    return a.x * b.x + a.y * b.y + a.z * b.z;
-}
-
-static Vec3 vec3_normalize(Vec3 v) {
-    float len = sqrtf(vec3_dot(v, v));
-    return (Vec3){v.x / len, v.y / len, v.z / len};
-}
-
 Mat4 mat4_look_at(Vec3 eye, Vec3 center, Vec3 up) {
     Vec3 f = vec3_normalize(vec3_sub(center, eye));
     Vec3 s = vec3_normalize(vec3_cross(f, up));
